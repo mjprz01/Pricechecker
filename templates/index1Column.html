@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price Checker</title>
+</head>
+<body>
+    <h1>Price Checker</h1>
+    
+    <form method="POST">
+        <h3>Select Products:</h3>
+        {% for name in product_names %}
+        <label>
+            <input type="checkbox" name="product_name" value="{{ name }}">
+            {{ name }}
+        </label><br>
+        {% endfor %}
+        <br>
+        <button type="submit">Check Prices</button>
+    </form>
+
+    {% if not selected_products.empty %}
+    <h3>Selected Products:</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Product Code</th>
+                <th>Product Name</th>
+                <th>Product Description</th>
+                <th>Unit Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in selected_products.itertuples() %}
+            <tr>
+                <td>{{ product.ProductCode }}</td>
+                <td>{{ product.ProductName }}</td>
+                <td>{{ product.ProductDescription }}</td>
+                <td>${{ "{:.2f}".format(product.UnitPrice) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No products selected.</p>
+    {% endif %}
+</body>
+</html>
